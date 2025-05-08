@@ -10,8 +10,7 @@ import Courses from "./pages/Courses";
 import Attendance from "./pages/Attendance";
 import Certificates from "./pages/Certificates";
 import AdminStudents from "./pages/AdminStudents";
-import SignIn from "./pages/SignIn";
-import Register from "./pages/Register";
+import Auth from "./pages/Auth";
 import VerifyAccount from "./pages/VerifyAccount";
 import NotFound from "./pages/NotFound";
 
@@ -25,8 +24,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Auth routes */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/signin" element={<Auth />} />
+          <Route path="/register" element={<Auth />} />
           <Route path="/verify" element={<VerifyAccount />} />
           
           {/* Protected routes */}
@@ -36,7 +35,7 @@ const App = () => (
           <Route path="/certificates" element={<Layout><Certificates /></Layout>} />
           <Route path="/admin/students" element={<Layout><AdminStudents /></Layout>} />
           
-          {/* Redirect root to signin */}
+          {/* Redirect root to auth */}
           <Route path="/" element={<Navigate to="/signin" replace />} />
           
           {/* 404 */}
