@@ -35,7 +35,7 @@ const App = () => (
           <Route path="/certificates" element={<Layout><Certificates /></Layout>} />
           <Route path="/admin/students" element={<Layout><AdminStudents /></Layout>} />
           
-          {/* Redirect root to auth */}
+          {/* Redirect root to signin */}
           <Route path="/" element={<Navigate to="/signin" replace />} />
           
           {/* 404 */}
