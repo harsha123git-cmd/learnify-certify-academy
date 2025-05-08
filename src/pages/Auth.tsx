@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -107,25 +107,38 @@ const Auth = () => {
       <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6">
         <div className="flex justify-center gap-4 mb-6">
           <Button
-            onClick={() => navigate("/signin")}
-            variant={!isRegisterView ? "default" : "outline"}
+            onClick={() => navigate("/auth")}
+            variant={"default"}
             className="w-full"
           >
-            Sign In
-          </Button>
-          
-          <Button
-            onClick={() => navigate("/register")}
-            variant={isRegisterView ? "default" : "outline"}
-            className="w-full"
-          >
-            Register
+            Quick Login
           </Button>
         </div>
         
-        {!isRegisterView ? (
-          <div>
-            <h2 className="text-2xl font-bold mb-4 text-center">Sign in to your account</h2>
+        <div>
+          <h2 className="text-2xl font-bold mb-4 text-center">Authentication Options</h2>
+          <div className="space-y-4">
+            <Button 
+              onClick={() => navigate("/signin")}
+              className="w-full"
+              variant="outline"
+            >
+              <LogIn className="mr-2 h-4 w-4" />
+              Go to Sign In Page
+            </Button>
+            
+            <Button 
+              onClick={() => navigate("/register")}
+              className="w-full" 
+              variant="outline"
+            >
+              <UserPlus className="mr-2 h-4 w-4" />
+              Go to Register Page
+            </Button>
+          </div>
+          
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <h3 className="text-xl font-semibold mb-4 text-center">Quick Login</h3>
             <Form {...signInForm}>
               <form onSubmit={signInForm.handleSubmit(handleSignIn)} className="space-y-4">
                 <FormField
@@ -190,113 +203,7 @@ const Auth = () => {
               </form>
             </Form>
           </div>
-        ) : (
-          <div>
-            <h2 className="text-2xl font-bold mb-4 text-center">Create an account</h2>
-            <Form {...registerForm}>
-              <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-4">
-                <FormField
-                  control={registerForm.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={registerForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email address</FormLabel>
-                      <FormControl>
-                        <Input placeholder="you@example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={registerForm.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={isPasswordVisible ? "text" : "password"} 
-                            placeholder="Create a strong password" 
-                            {...field} 
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 text-gray-400 hover:text-gray-600"
-                            onClick={togglePasswordVisibility}
-                          >
-                            {isPasswordVisible ? (
-                              <EyeOff className="h-4 w-4" />
-                            ) : (
-                              <Eye className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={registerForm.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={isConfirmPasswordVisible ? "text" : "password"} 
-                            placeholder="Confirm your password" 
-                            {...field} 
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 text-gray-400 hover:text-gray-600"
-                            onClick={toggleConfirmPasswordVisibility}
-                          >
-                            {isConfirmPasswordVisible ? (
-                              <EyeOff className="h-4 w-4" />
-                            ) : (
-                              <Eye className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <Button type="submit" className="w-full" disabled={registerForm.formState.isSubmitting}>
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Register
-                </Button>
-              </form>
-            </Form>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

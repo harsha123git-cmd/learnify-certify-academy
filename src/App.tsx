@@ -11,6 +11,8 @@ import Attendance from "./pages/Attendance";
 import Certificates from "./pages/Certificates";
 import AdminStudents from "./pages/AdminStudents";
 import Auth from "./pages/Auth";
+import SignIn from "./pages/SignIn";
+import Register from "./pages/Register";
 import VerifyAccount from "./pages/VerifyAccount";
 import NotFound from "./pages/NotFound";
 
@@ -23,9 +25,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* Auth routes */}
-          <Route path="/signin" element={<Auth />} />
-          <Route path="/register" element={<Auth />} />
+          {/* Auth routes with both options */}
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerifyAccount />} />
           
           {/* Protected routes */}
@@ -36,7 +39,7 @@ const App = () => (
           <Route path="/admin/students" element={<Layout><AdminStudents /></Layout>} />
           
           {/* Redirect root to signin */}
-          <Route path="/" element={<Navigate to="/signin" replace />} />
+          <Route path="/" element={<Navigate to="/auth" replace />} />
           
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
