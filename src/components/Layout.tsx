@@ -8,11 +8,9 @@ import { Menu } from "lucide-react";
 
 interface LayoutProps {
   children: ReactNode;
-  onSignInClick?: () => void;
-  onRegisterClick?: () => void;
 }
 
-const Layout = ({ children, onSignInClick, onRegisterClick }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   const isMobile = useIsMobile();
 
   return (
@@ -29,18 +27,12 @@ const Layout = ({ children, onSignInClick, onRegisterClick }: LayoutProps) => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 bg-sidebar">
-            <Sidebar 
-              onSignInClick={onSignInClick} 
-              onRegisterClick={onRegisterClick} 
-            />
+            <Sidebar />
           </SheetContent>
         </Sheet>
       ) : (
         <div className="w-[250px] hidden md:block">
-          <Sidebar 
-            onSignInClick={onSignInClick} 
-            onRegisterClick={onRegisterClick} 
-          />
+          <Sidebar />
         </div>
       )}
       <div className="flex-1 overflow-auto">
