@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,38 +16,87 @@ import SignIn from "./pages/SignIn";
 import Register from "./pages/Register";
 import VerifyAccount from "./pages/VerifyAccount";
 import NotFound from "./pages/NotFound";
+import AuthModals from "./components/AuthModals";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Auth routes with both options */}
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/verify" element={<VerifyAccount />} />
+const App = () => {
+  const [signInOpen, setSignInOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          {/* Auth Modals - accessible throughout the app */}
+          <AuthModals 
+            signInOpen={signInOpen}
+            registerOpen={registerOpen}
+            onSignInOpenChange={setSignInOpen}
+            onRegisterOpenChange={setRegisterOpen}
+          />
           
-          {/* Protected routes */}
-          <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-          <Route path="/courses" element={<Layout><Courses /></Layout>} />
-          <Route path="/attendance" element={<Layout><Attendance /></Layout>} />
-          <Route path="/certificates" element={<Layout><Certificates /></Layout>} />
-          <Route path="/admin/students" element={<Layout><AdminStudents /></Layout>} />
-          
-          {/* Redirect root to signin */}
-          <Route path="/" element={<Navigate to="/auth" replace />} />
-          
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+          <Routes>
+            {/* Auth routes with both options */}
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/verify" element={<VerifyAccount />} />
+            
+            {/* Protected routes */}
+            <Route path="/dashboard" element={
+              <Layout 
+                onSignInClick={() => setSignInOpen(true)} 
+                onRegisterClick={() => setRegisterOpen(true)}
+              >
+                <Dashboard />
+              </Layout>
+            } />
+            <Route path="/courses" element={
+              <Layout 
+                onSignInClick={() => setSignInOpen(true)} 
+                onRegisterClick={() => setRegisterOpen(true)}
+              >
+                <Courses />
+              </Layout>
+            } />
+            <Route path="/attendance" element={
+              <Layout 
+                onSignInClick={() => setSignInOpen(true)} 
+                onRegisterClick={() => setRegisterOpen(true)}
+              >
+                <Attendance />
+              </Layout>
+            } />
+            <Route path="/certificates" element={
+              <Layout 
+                onSignInClick={() => setSignInOpen(true)} 
+                onRegisterClick={() => setRegisterOpen(true)}
+              >
+                <Certificates />
+              </Layout>
+            } />
+            <Route path="/admin/students" element={
+              <Layout 
+                onSignInClick={() => setSignInOpen(true)} 
+                onRegisterClick={() => setRegisterOpen(true)}
+              >
+                <AdminStudents />
+              </Layout>
+            } />
+            
+            {/* Redirect root to auth */}
+            <Route path="/" element={<Navigate to="/auth" replace />} />
+            
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
